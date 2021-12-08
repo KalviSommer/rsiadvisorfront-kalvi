@@ -1,7 +1,7 @@
 <template>
   <div class="1page">
 
-    <div>RSI Advisor</div>
+    <h1>RSI Advisor</h1>
 <input name="userId" placeholder="Enter user ID">
     <br>
     <button v-on:click="signIn">Sign in</button>
