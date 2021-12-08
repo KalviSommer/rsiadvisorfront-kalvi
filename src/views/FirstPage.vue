@@ -6,7 +6,7 @@
     <br>
     <button v-on:click="signIn">Sign in</button>
     <br>
-    <button v-on:click="createNewAccount">Create new account</button>
+    <button v-on:click="createNewUser">Create new user</button>
 
   </div>
 
