@@ -3,8 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/FirstPage">FirstPage</router-link> |
-      <router-link to="/2page">2page</router-link> |
-      <router-link to="/3page">3page</router-link>
+      <router-link to="/SecondPage">SecondPage</router-link> |
+      <router-link to="/ThirdPage">ThirdPage</router-link>
     </div>
     <router-view/>
   </div>
