@@ -25,11 +25,6 @@ const routes = [
         component: SecondPage
     },
     {
-        path: '/SecondPage/:id',
-        name: 'SecondPage',
-        component: SecondPage
-    },
-    {
         path: '/ThirdPage',
         name: 'ThirdPage',
         component: ThirdPage

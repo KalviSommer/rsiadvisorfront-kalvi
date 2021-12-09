@@ -13,7 +13,7 @@
     <br>
     {{ answer }}
     <br>
-<!--    näita start nuppu siis kui answer on täidetud-->
+    <!--    näita start nuppu siis kui answer on täidetud-->
     <button v-show="answer !== '' " v-on:click="startHere(usersDto.userId)">Start here</button>
 
   </div>
@@ -39,8 +39,8 @@ export default {
             this.answer = response.data
           })
     },
-    startHere: function (userId) {
-      router.push({name: 'SecondPage', params: {id: userId}})
+    startHere: function () {
+      router.push({name: 'SecondPage', params: {id: this.userId}})
     },
     backToHome: function () {
       router.push({name: 'FirstPage'})
