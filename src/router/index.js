@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import FirstPage from '../views/FirstPage.vue'
+import SecondPage from '../views/SecondPage.vue'
+import ThirdPage from '../views/ThirdPage.vue'
 
 
 Vue.use(VueRouter)
@@ -18,25 +20,20 @@ const routes = [
         component: FirstPage
     },
     {
-        path: '/2page',
-        name: '2page',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/2page.vue')
-        }
+        path: '/SecondPage',
+        name: 'SecondPage',
+        component: SecondPage
     },
     {
-        path: '/3page',
-        name: '3page',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/3page.vue')
-        }
-    }
+        path: '/SecondPage/:id',
+        name: 'SecondPage',
+        component: SecondPage
+    },
+    {
+        path: '/ThirdPage',
+        name: 'ThirdPage',
+        component: ThirdPage
+    },
 ]
 
 const router = new VueRouter({
