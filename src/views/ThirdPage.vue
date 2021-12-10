@@ -13,8 +13,10 @@
     <br>
     {{ answer }}
     <br>
-    <!--    näita start nuppu siis kui answer on täidetud-->
-    <button v-show="answer !== '' " v-on:click="startHere(usersDto.userId)">Start here</button>
+    <br>
+    {{answer2}}
+        <!--    näita start nuppu siis kui answer on täidetud v-show="answer !== '' "-->
+    <button v-show="answer !== '' " v-on:click="startHere()">Start here</button>
 
   </div>
 
@@ -27,7 +29,9 @@ export default {
   data: function () {
     return {
       usersDto: {},
+      userId: "",
       answer: "",
+      answer2: "",
 
     }
   },
@@ -36,7 +40,9 @@ export default {
     createNewUser: function () {
       this.$http.post('rsiadvisor/newuser', this.usersDto)
           .then(response => {
-            this.answer = response.data
+            this.userId = response.data
+            this.answer = "New account is created with the id " + this.userId
+            this.answer2 = "You may start right away => "
           })
     },
     startHere: function () {

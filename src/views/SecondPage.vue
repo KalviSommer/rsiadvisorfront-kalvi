@@ -1,24 +1,50 @@
 <template>
-  <div class="SecondPage" style="text-align: left; margin-left: 100px">
-    <span>User ID: {{userId}}</span><br>
-    <br>
-    <br>
-    <div style="text-align: left; margin-left: 100px">
-     <button v-on:click="setAlert">Create new alert</button><br>
+
+  <div class="SecondPage">
+    <div>
+      User ID: {{ userId }}
+      <button v-on:click="backToHome()" style="text-align: center; margin-left: 15cm">Back to home</button>
+      <br>
       <br>
     </div>
-    <button>Choose symbol</button><br>
+    <div style="text-align: left; margin-left: 100px; float:left">
+      <button v-on:click="setAlert">Create new alert</button>
       <br>
-
-      <button>RSI timeframe</button><br>
       <br>
-      <button>RSI filter</button><br>
+      <button>Choose symbol</button>
       <br>
-      <button>Add to table</button><br>
       <br>
-
-    <button class="Center">Demo</button>
-
+      <button>RSI timeframe</button>
+      <br>
+      <br>
+      <button>RSI filter</button>
+      <br>
+      <br>
+      <button>Add to table</button>
+      <br>
+      <br>
+    </div>
+    <div style="text-align: right; margin-right: 200px; float:right">
+      <table>
+        <th></th>
+        <th>Symbol</th>
+        <th>Closing price</th>
+        <th>Current RSI</th>
+        <th>RSI timeframe</th>
+        <th>RSI filter</th>
+        <tr>
+          <td>
+            <input type="checkbox"/>
+          </td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <button>Delete</button>
+        </tr>
+      </table>
+    </div>
 
   </div>
 
@@ -36,7 +62,7 @@ export default {
   },
 
   methods: {
-    setAlert: function (){
+    setAlert: function () {
 
     },
     getSelectedUser: function () {
@@ -51,6 +77,9 @@ export default {
     goToDashboard: function () {
       router.push({name: 'SecondPage'})
     },
+    backToHome: function () {
+      router.push({name: 'FirstPage'})
+    }
   },
   mounted() {
     this.userId = this.$route.params.id
@@ -59,22 +88,40 @@ export default {
 }
 </script>
 
-<style scoped>
-input {background: #a29b97
+<style>
+input {
+  background: #a29b97
 }
+
 table {
   text-decoration-color: #26e808;
   background-color: burlywood;
-  margin-left: auto;
-  margin-right: auto;
+  border-style: solid;
+  alignment: right;
+
 
 }
-td{color: #282626;
-  background-color: darkkhaki;
+
+tr {
+  border-style: solid;
 }
-button {color-adjust: economy;
+
+td {
+  color: #282626;
+  background-color: burlywood;
+  border-style: solid;
+  border-width: thin;
+}
+
+button {
+  color-adjust: economy;
   color: #030303;
   background-color: #d7690f;
-  }
-img {margin-left: unset}
+}
+
+img {
+  margin-left: unset
+}
+
+
 </style>
