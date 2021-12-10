@@ -1,8 +1,8 @@
 <template>
 
   <div class="SecondPage">
-     <div>
-    
+    <div>
+
       <button v-on:click="backToHome()" style="text-align: center; margin-left: 15cm">Back to home</button>
       <br>
       <br>
@@ -14,11 +14,14 @@
       <button v-on:click="setAlert">Create new alert</button>
       <br>
       <br>
-      <button>Choose symbol</button><br>
+      <button>Choose symbol</button>
+      <br>
       1=BTC 2=ETC
       <select v-model="symbol">
-        BTC<option>1</option>
-        ETC<option>2</option>
+        BTC
+        <option>1</option>
+        ETC
+        <option>2</option>
       </select>
       <br>
       <br>
@@ -44,11 +47,6 @@
     </div>
 
 
-
-
-  
-   
-    
     <div style="text-align: right; margin-right: 200px; float:right">
       <table>
         <th></th>
@@ -93,8 +91,9 @@ export default {
   methods: {
 
     alertParams: function () {
-      this.$http.post('rsiadvisor/alertParams/' + this.symbol + "/" + this.userId+ "/"
+      this.$http.post('rsiadvisor/alertParams/' + this.symbol + "/" + this.userId + "/"
           + this.rsifilter + "/" + this.timeframe)
+    },
 
     setAlert: function () {
 
@@ -107,12 +106,11 @@ export default {
             this.postedParams = response.data
           })
     },
-    setAlert: function () {
 
-    },
     goToDashboard: function () {
       router.push({name: 'SecondPage'})
-    },
+    }
+    ,
     backToHome: function () {
       router.push({name: 'FirstPage'})
     }
@@ -122,6 +120,8 @@ export default {
 
   }
 }
+
+
 </script>
 
 
@@ -140,9 +140,6 @@ table {
 
 
 }
-
-
-
 
 
 tr {
