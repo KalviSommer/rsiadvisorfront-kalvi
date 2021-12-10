@@ -1,6 +1,12 @@
 <template>
-  <div class="SecondPage">
 
+  <div class="SecondPage">
+     <div>
+    
+      <button v-on:click="backToHome()" style="text-align: center; margin-left: 15cm">Back to home</button>
+      <br>
+      <br>
+    </div>
     <div style="text-align: left; margin-left: 100px; float: left">
       <span>User ID: {{ userId }}</span><br>
       <br>
@@ -36,36 +42,31 @@
       <br>
       <br>
     </div>
-    <div style="text-align: right; margin-right: 100px">
+
+
+
+
+  
+   
+    
+    <div style="text-align: right; margin-right: 200px; float:right">
       <table>
+        <th></th>
+        <th>Symbol</th>
+        <th>Closing price</th>
+        <th>Current RSI</th>
+        <th>RSI timeframe</th>
+        <th>RSI filter</th>
         <tr>
-          <th></th>
-          <th>Symbol</th>
-          <th>Current price</th>
-          <th>Current RSI</th>
-          <th>RSI timeframe</th>
-          <th>RSI filter</th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>rrt</td>
-          <td>rtr</td>
-          <td>trtr</td>
-        </tr>
-        <tr>
-          <td>rrt</td>
-          <td>rtr</td>
-          <td>trtr</td>
-        </tr>
-        <tr>
-          <td>rrt</td>
-          <td>rtr</td>
-          <td>trtr</td>
-        </tr>
-        <tr>
-          <td>rrt</td>
-          <td>rtr</td>
-          <td>trtr</td>
+          <td>
+            <input type="checkbox"/>
+          </td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <td>GET</td>
+          <button>Delete</button>
         </tr>
       </table>
     </div>
@@ -90,9 +91,17 @@ export default {
   },
 
   methods: {
+
     alertParams: function () {
       this.$http.post('rsiadvisor/alertParams/' + this.symbol + "/" + this.userId+ "/"
           + this.rsifilter + "/" + this.timeframe)
+
+    setAlert: function () {
+
+    },
+    getSelectedUser: function () {
+      this.$http.get('rsiadvisor/getuser/' + this.userId)
+
           .then(response => {
             console.log(this.alertParams)
             this.postedParams = response.data
@@ -104,6 +113,9 @@ export default {
     goToDashboard: function () {
       router.push({name: 'SecondPage'})
     },
+    backToHome: function () {
+      router.push({name: 'FirstPage'})
+    }
   },
   mounted() {
     this.userId = this.$route.params.id
@@ -112,7 +124,10 @@ export default {
 }
 </script>
 
+
 <style scoped>
+
+
 input {
   background: #a29b97
 }
@@ -120,15 +135,27 @@ input {
 table {
   text-decoration-color: #26e808;
   background-color: burlywood;
-  margin-left: auto;
-  margin-right: auto;
+  border-style: solid;
+  alignment: right;
 
+
+}
+
+
+
+
+
+tr {
+  border-style: solid;
 }
 
 td {
   color: #282626;
-  background-color: darkkhaki;
+  background-color: burlywood;
+  border-style: solid;
+  border-width: thin;
 }
+
 
 button {
   color-adjust: economy;
