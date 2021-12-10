@@ -1,29 +1,54 @@
 <template>
 
   <div class="SecondPage">
-    <div>
-      User ID: {{ userId }}
+     <div>
+    
       <button v-on:click="backToHome()" style="text-align: center; margin-left: 15cm">Back to home</button>
       <br>
       <br>
     </div>
-    <div style="text-align: left; margin-left: 100px; float:left">
+    <div style="text-align: left; margin-left: 100px; float: left">
+      <span>User ID: {{ userId }}</span><br>
+      <br>
+      <br>
       <button v-on:click="setAlert">Create new alert</button>
       <br>
       <br>
-      <button>Choose symbol</button>
+      <button>Choose symbol</button><br>
+      1=BTC 2=ETC
+      <select v-model="symbol">
+        BTC<option>1</option>
+        ETC<option>2</option>
+      </select>
       <br>
       <br>
       <button>RSI timeframe</button>
+      <select v-model="timeframe">
+        <option>1D</option>
+      </select>
       <br>
       <br>
-      <button>RSI filter</button>
+      <button>RSI sell filter</button>
+      <select v-model="rsifilter">
+        <option>40</option>
+        <option>35</option>
+        <option>30</option>
+        <option>25</option>
+        <option>20</option>
+      </select><br>
       <br>
       <br>
-      <button>Add to table</button>
+      <button v-on:click="alertParams">Add to table</button>
       <br>
       <br>
     </div>
+
+
+
+
+  
+   
+    
     <div style="text-align: right; margin-right: 200px; float:right">
       <table>
         <th></th>
@@ -46,6 +71,7 @@
       </table>
     </div>
 
+
   </div>
 
 </template>
@@ -55,24 +81,34 @@ import router from "@/router";
 export default {
   data: function () {
     return {
-      answer: "",
       userId: "",
-      userIdAns: {}
+      postedParams: "",
+      symbol: "",
+      timeframe: "",
+      rsifilter: "",
+
     }
   },
 
   methods: {
+
+    alertParams: function () {
+      this.$http.post('rsiadvisor/alertParams/' + this.symbol + "/" + this.userId+ "/"
+          + this.rsifilter + "/" + this.timeframe)
+
     setAlert: function () {
 
     },
     getSelectedUser: function () {
       this.$http.get('rsiadvisor/getuser/' + this.userId)
+
           .then(response => {
-            this.userIdAns = response.data
+            console.log(this.alertParams)
+            this.postedParams = response.data
           })
     },
-    goToRegister: function () {
-      router.push({name: '3page'})
+    setAlert: function () {
+
     },
     goToDashboard: function () {
       router.push({name: 'SecondPage'})
@@ -88,7 +124,10 @@ export default {
 }
 </script>
 
-<style>
+
+<style scoped>
+
+
 input {
   background: #a29b97
 }
@@ -102,6 +141,10 @@ table {
 
 }
 
+
+
+
+
 tr {
   border-style: solid;
 }
@@ -113,6 +156,7 @@ td {
   border-width: thin;
 }
 
+
 button {
   color-adjust: economy;
   color: #030303;
@@ -122,6 +166,4 @@ button {
 img {
   margin-left: unset
 }
-
-
 </style>
