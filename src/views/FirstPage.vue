@@ -36,7 +36,6 @@ export default {
       router.push({name: 'ThirdPage'})
     },
     goToDashboard: function () {
-      console.log(this.userId)
       router.push({name: 'SecondPage', params: {id: this.userId}})
     },
   }
