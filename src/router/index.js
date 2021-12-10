@@ -20,12 +20,6 @@ const routes = [
         component: FirstPage
     },
     {
-        path: '/SecondPage/:id',
-        name: 'SecondPage',
-        component: SecondPage
-    },
-
-    {
         path: '/SecondPage',
         name: 'SecondPage',
         component: SecondPage
@@ -34,7 +28,7 @@ const routes = [
         path: '/ThirdPage',
         name: 'ThirdPage',
         component: ThirdPage
-    }
+    },
 ]
 
 const router = new VueRouter({
