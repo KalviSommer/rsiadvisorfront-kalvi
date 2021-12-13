@@ -41,7 +41,8 @@
       </select><br>
       <br>
       <br>
-      <button v-on:click="alertParams">Add to table</button>
+      <button v-on:click="alertParams",>Set alert</button>
+      <button v-on:click="setAlert">Add to table</button>
       <br>
       <br>
     </div>
@@ -59,11 +60,11 @@
           <td>
             <input type="checkbox"/>
           </td>
-          <td>GET</td>
-          <td>GET</td>
-          <td>GET</td>
-          <td>GET</td>
-          <td>GET</td>
+          <td>{{ alert.symbol }}</td>
+          <td>{{ alert.closingPrice }}</td>
+          <td>{{ alert.rsi }}</td>
+          <td>{{ alert.rsiFilter }}</td>
+          <td>{{ alert.rsiTimeframe }}</td>
           <button>Delete</button>
         </tr>
       </table>
@@ -84,6 +85,7 @@ export default {
       symbol: "",
       timeframe: "",
       rsifilter: "",
+      alert: {}
 
     }
   },
@@ -96,7 +98,10 @@ export default {
     },
 
     setAlert: function () {
-
+      this.$http.get('rsiadvisor/setalert/' + this.symbol + "/" + this.userId)
+          .then(response => {
+            this.alert = response.data
+          })
     },
     getSelectedUser: function () {
       this.$http.get('rsiadvisor/getuser/' + this.userId)
