@@ -2,14 +2,14 @@
   <div class="FirstPage" :class="mode">
     <br>
     <div class="FirstPageImg">
-      <img alt="Rsi logo" src="../assets/rsilogo.png" v-card class="rounded-card">
+      <img alt="Rsi logo" src="../assets/rsilogo.png" class="rounded-card">
     </div>
     <div class="center">
-      <input v-card class="rounded-card" style="text-align: center" name="userId" placeholder="Enter user ID"
+      <input class="rounded-card" style="text-align: center" name="userId" placeholder="Enter user ID"
              v-model="userId">
       <br>
       <br>
-      <button v-card class="rounded-card + signInButton" style="text-align: center" v-on:click="goToDashboard()">Sign
+      <button class="rounded-card + signInButton" style="text-align: center" v-on:click="goToDashboard()">Sign
         in
       </button>
       <br>
@@ -22,7 +22,7 @@
       <h5>________</h5>
       <br>
       Don't have an account?
-      <button v-card class="rounded-card + registerButton" v-on:click="goToRegister">Register
+      <button class="rounded-card + registerButton" v-on:click="goToRegister">Register
       </button>
     </div>
   </div>

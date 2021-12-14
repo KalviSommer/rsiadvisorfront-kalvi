@@ -11,19 +11,19 @@
     </header>
     <br>
     <div class="ThirdPageCenter">
-      <input v-card class="rounded-card  + thirdPageInput" style="text-align: center" v-model="usersDto.firstName"
+      <input class="rounded-card  + thirdPageInput" style="text-align: center" v-model="usersDto.firstName"
              placeholder="First name">
       <br>
 
-      <input v-card class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.lastName"
+      <input class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.lastName"
              placeholder="Last name">
       <br>
 
-      <input v-card class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.email"
+      <input class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.email"
              placeholder="Email">
       <br>
       <br>
-      <button v-card class="rounded-card + signInButton" v-on:click="createNewUser()">Sign up</button>
+      <button class="rounded-card + signInButton" v-on:click="createNewUser()">Sign up</button>
       <br>
       <br>
       {{ answer }}
@@ -35,7 +35,7 @@
       <br>
 
       <!--    näita start nuppu siis kui answer on täidetud v-show="answer !== '' "-->
-      <button v-card class="rounded-card + registerButton" v-show="answer !== '' " v-on:click="startHere()">Start here
+      <button class="rounded-card + registerButton" v-show="answer !== '' " v-on:click="startHere()">Start here
       </button>
     </div>
   </div>

@@ -20,7 +20,7 @@ const routes = [
         component: FirstPage
     },
     {
-        path: '/SecondPage',
+        path: '/SecondPage/:id',
         name: 'SecondPage',
         component: SecondPage
     },

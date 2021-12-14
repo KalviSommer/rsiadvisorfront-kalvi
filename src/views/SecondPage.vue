@@ -40,15 +40,15 @@
       <br>
       <br>
     </div>
-<!--    <div style="text-align: right; margin-right: 200px; float:right">-->
-     <div>
+    <!--    <div style="text-align: right; margin-right: 200px; float:right">-->
+    <div>
       <table>
         <tr>
-        <th>Symbol</th>
-        <th>Closing price</th>
-        <th>Current RSI</th>
-        <th>RSI timeframe</th>
-        <th>RSI filter</th>
+          <th>Symbol</th>
+          <th>Closing price</th>
+          <th>Current RSI</th>
+          <th>RSI timeframe</th>
+          <th>RSI filter</th>
         </tr>
         <tr v-for="row in alert">
           <td>{{ row.symbol }}</td>
@@ -78,10 +78,7 @@ export default {
       symbol: "",
       timeframe: "",
       rsifilter: "",
-
-    
-      mode: 'dark'
-
+      mode: 'dark',
       alert: []
 
 
@@ -92,6 +89,8 @@ export default {
   },
 
   created() {
+    this.userId = this.$route.params.id;
+    this.getAlertlist()
     window.addEventListener('keyup', this.keyPress)
   },
 
@@ -100,10 +99,12 @@ export default {
     alertParams: function () {
       this.$http.post('rsiadvisor/setAlert/' + this.symbol + "/" + this.userId + "/"
           + this.rsifilter + "/" + this.timeframe)
-      .then(response => {this.getAlertlist()})
-      .catch(error => {
-        alert(error.response.data.message)
-      })
+          .then(response => {
+            this.getAlertlist()
+          })
+          .catch(error => {
+            alert(error.response.data.message)
+          })
     },
 
     getAlertlist: function () {
@@ -145,15 +146,9 @@ export default {
         this.mode = "light"
       } else {
         this.mode = "dark"
- 
-
-    }
-  },
-  mounted() {
-    this.userId = this.$route.params.id;
-    this.getAlertlist()
 
 
+      }
     },
   }
 }
@@ -175,12 +170,14 @@ button {
   color: #e2e2e2;
   border-radius: 50px;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+
 .SecondPage {
   width: 100vw;
   min-height: 100vh;
@@ -188,6 +185,7 @@ button {
   color: #15202B;
   transition: background 0.3s ease-in-out;
 }
+
 .dark {
   background: #192734;
   color: #E8E8E8;
@@ -206,8 +204,6 @@ tr {
 td {
   background-color: #4801ff;
 }
-
-
 
 
 </style>
