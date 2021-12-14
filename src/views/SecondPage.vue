@@ -15,12 +15,11 @@
       <br>
       <br>
       Choose symbol <br>
-      1=BTC 2=ETC 3=SOL 4=BNB
       <select v-model="symbol">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
+        <option value="1">BTC/USDT</option>
+        <option value="2">ETH/USDT</option>
+        <option value="3">SOL/USDT</option>
+        <option value="4">BNB/USDT</option>
       </select>
       <br>
       <br>
@@ -91,7 +90,7 @@ export default {
           + this.rsifilter + "/" + this.timeframe)
       .then(response => {this.getAlertlist()})
       .catch(error => {
-        alert("viga")
+        alert(error.response.data.message)
       })
     },
 
