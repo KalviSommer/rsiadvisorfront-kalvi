@@ -9,60 +9,54 @@
       <br>
       <br>
       <br>
-      <button v-on:click="setAlert">Create new alert</button>
+      <button v-on:click="getAlertlist">Refresh</button>
       <br>
       <br>
-      <button>Choose symbol</button>
-      <br>
-      1=BTC 2=ETC
+      Choose symbol <br>
       <select v-model="symbol">
-        BTC
-        <option>1</option>
-        ETC
-        <option>2</option>
+        <option value="1">BTC/USDT</option>
+        <option value="2">ETH/USDT</option>
+        <option value="3">SOL/USDT</option>
+        <option value="4">BNB/USDT</option>
       </select>
       <br>
       <br>
-      <button>RSI timeframe</button>
+      RSI timeframe
       <select v-model="timeframe">
         <option>1D</option>
+        <option>1H</option>
       </select>
       <br>
       <br>
-      <button>RSI sell filter</button>
-      <select v-model="rsifilter">
-        <option>40</option>
-        <option>35</option>
-        <option>30</option>
-        <option>25</option>
-        <option>20</option>
-      </select><br>
+      RSI sell filter <br>
+      Crossing down
+      Available values:1-100
+      <input v-model="rsifilter">
+      <br>
       <br>
       <br>
       <button v-on:click="alertParams">Set alert</button>
-      <button v-on:click="setAlert">Add to table</button>
+
       <br>
       <br>
     </div>
 <!--    <div style="text-align: right; margin-right: 200px; float:right">-->
      <div>
       <table>
-        <th></th>
+        <tr>
         <th>Symbol</th>
         <th>Closing price</th>
         <th>Current RSI</th>
         <th>RSI timeframe</th>
         <th>RSI filter</th>
-        <tr>
-          <td>
-            <input type="checkbox"/>
-          </td>
-          <td>{{ alert.symbol }}</td>
-          <td>{{ alert.closingPrice }}</td>
-          <td>{{ alert.rsi }}</td>
-          <td>{{ alert.rsiFilter }}</td>
-          <td>{{ alert.rsiTimeframe }}</td>
-          <button>Delete</button>
+        </tr>
+        <tr v-for="row in alert">
+          <td>{{ row.symbol }}</td>
+          <td>{{ row.closingPrice }}</td>
+          <td>{{ row.rsi }}</td>
+          <td>{{ row.rsiTimeframe }}</td>
+          <td>{{ row.rsiFilter }}</td>
+          <button v-on:click="deleteAlert(row.id)">Delete</button>
         </tr>
       </table>
     </div>
@@ -84,8 +78,13 @@ export default {
       symbol: "",
       timeframe: "",
       rsifilter: "",
-      alert: {},
+
+    
       mode: 'dark'
+
+      alert: []
+
+
     }
   },
   components: {
@@ -99,12 +98,16 @@ export default {
   methods: {
 
     alertParams: function () {
-      this.$http.post('rsiadvisor/alertParams/' + this.symbol + "/" + this.userId + "/"
+      this.$http.post('rsiadvisor/setAlert/' + this.symbol + "/" + this.userId + "/"
           + this.rsifilter + "/" + this.timeframe)
+      .then(response => {this.getAlertlist()})
+      .catch(error => {
+        alert(error.response.data.message)
+      })
     },
 
-    setAlert: function () {
-      this.$http.get('rsiadvisor/setalert/' + this.symbol + "/" + this.userId)
+    getAlertlist: function () {
+      this.$http.get('rsiadvisor/alertlist/' + this.userId)
           .then(response => {
             this.alert = response.data
           })
@@ -117,6 +120,12 @@ export default {
             this.postedParams = response.data
           })
     },
+    deleteAlert: function (id) {
+      this.$http.delete('rsiadvisor/deletealert//' + id)
+          .then(response => {
+            this.getAlertlist()
+          })
+    },
 
     goToDashboard: function () {
       router.push({name: 'SecondPage'})
@@ -124,6 +133,7 @@ export default {
     ,
     backToHome: function () {
       router.push({name: 'FirstPage'})
+
     },
     keyPress(e) {
       if (e.key === 't') {
@@ -135,10 +145,14 @@ export default {
         this.mode = "light"
       } else {
         this.mode = "dark"
-      }
-    },
-    mounted() {
-      this.userId = this.$route.params.id
+ 
+
+    }
+  },
+  mounted() {
+    this.userId = this.$route.params.id;
+    this.getAlertlist()
+
 
     },
   }
