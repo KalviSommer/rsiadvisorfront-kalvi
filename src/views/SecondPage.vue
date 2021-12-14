@@ -1,14 +1,12 @@
 <template>
 
-  <div class="SecondPage">
-    <div>
+  <div class="SecondPage" :class="mode">
+    <Header :mode="mode" @toggle="toggle"/>
+    <br>
 
-      <button v-on:click="backToHome()" style="text-align: center; margin-left: 15cm">Back to home</button>
+    <div style="text-align: left; margin-left: 60px; float: left">
+      <span>User ID: {{ userId }}</span>
       <br>
-      <br>
-    </div>
-    <div style="text-align: left; margin-left: 100px; float: left">
-      <span>User ID: {{ userId }}</span><br>
       <br>
       <br>
       <button v-on:click="setAlert">Create new alert</button>
@@ -41,14 +39,13 @@
       </select><br>
       <br>
       <br>
-      <button v-on:click="alertParams",>Set alert</button>
+      <button v-on:click="alertParams">Set alert</button>
       <button v-on:click="setAlert">Add to table</button>
       <br>
       <br>
     </div>
-
-
-    <div style="text-align: right; margin-right: 200px; float:right">
+<!--    <div style="text-align: right; margin-right: 200px; float:right">-->
+     <div>
       <table>
         <th></th>
         <th>Symbol</th>
@@ -69,15 +66,17 @@
         </tr>
       </table>
     </div>
-
-
   </div>
+
 
 </template>
 <script>
 import router from "@/router";
+import Header from '@/views/Header';
+
 
 export default {
+  name: 'SecondPage',
   data: function () {
     return {
       userId: "",
@@ -85,9 +84,16 @@ export default {
       symbol: "",
       timeframe: "",
       rsifilter: "",
-      alert: {}
-
+      alert: {},
+      mode: 'dark'
     }
+  },
+  components: {
+    Header,
+  },
+
+  created() {
+    window.addEventListener('keyup', this.keyPress)
   },
 
   methods: {
@@ -118,11 +124,23 @@ export default {
     ,
     backToHome: function () {
       router.push({name: 'FirstPage'})
-    }
-  },
-  mounted() {
-    this.userId = this.$route.params.id
+    },
+    keyPress(e) {
+      if (e.key === 't') {
+        this.toggle()
+      }
+    },
+    toggle() {
+      if (this.mode === "dark") {
+        this.mode = "light"
+      } else {
+        this.mode = "dark"
+      }
+    },
+    mounted() {
+      this.userId = this.$route.params.id
 
+    },
   }
 }
 
@@ -130,42 +148,52 @@ export default {
 </script>
 
 
-<style scoped>
-
-
-input {
-  background: #a29b97
+<style>
+button {
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #ac32e4 0%,
+  #7918f2 48%,
+  #4801ff 100%);
+  color: #e2e2e2;
+  border-radius: 50px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+.SecondPage {
+  width: 100vw;
+  min-height: 100vh;
+  background: #F3F3F3;
+  color: #15202B;
+  transition: background 0.3s ease-in-out;
+}
+.dark {
+  background: #192734;
+  color: #E8E8E8;
 }
 
 table {
-  text-decoration-color: #26e808;
-  background-color: burlywood;
-  border-style: solid;
-  alignment: right;
-
+  display: flex;
+  justify-content: right;
 
 }
 
-
 tr {
-  border-style: solid;
+  background-color: #7918f2;
 }
 
 td {
-  color: #282626;
-  background-color: burlywood;
-  border-style: solid;
-  border-width: thin;
+  background-color: #4801ff;
 }
 
 
-button {
-  color-adjust: economy;
-  color: #030303;
-  background-color: #d7690f;
-}
 
-img {
-  margin-left: unset
-}
+
 </style>
