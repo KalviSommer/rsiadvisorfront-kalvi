@@ -2,17 +2,12 @@
 
   <div class="SecondPage" :class="mode">
     <Header :mode="mode" @toggle="toggle"/>
-    <br>
 
-    <div style="text-align: left; margin-left: 60px; float: left">
-      <span>User ID: {{ userId }}</span>
-      <br>
-      <br>
-      <br>
-      <button v-on:click="getAlertlist">Refresh</button>
-      <br>
-      <br>
-      Choose symbol <br>
+    <br>
+    <span style="text-align: left; margin-left: 60px">User ID: {{ userId }}</span>
+
+    <div class="SecondPageAlignLeft">
+      Choose symbol
       <select v-model="symbol">
         <option value="1">BTC/USDT</option>
         <option value="2">ETH/USDT</option>
@@ -28,21 +23,24 @@
       </select>
       <br>
       <br>
-      RSI sell filter <br>
-      Crossing down
-      Available values:1-100
-      <input v-model="rsifilter">
+      RSI filters <br>
+      <br>
+      <span style="text-align: left; margin-left: 30px">crossing down</span>
+
+      <input v-model="rsifilter" placeholder="available values:1-100" class="SecondPageInput">
       <br>
       <br>
       <br>
       <button v-on:click="alertParams">Set alert</button>
-
       <br>
       <br>
     </div>
-    <!--    <div style="text-align: right; margin-right: 200px; float:right">-->
-    <div>
-      <table>
+
+    <div style="margin-right: 200px; float: right">
+      <button v-on:click="getAlertlist">Refresh</button>
+      <br>
+      <br>
+      <table style="text-align: center">
         <tr>
           <th>Symbol</th>
           <th>Closing price</th>
@@ -56,7 +54,7 @@
           <td>{{ row.rsi }}</td>
           <td>{{ row.rsiTimeframe }}</td>
           <td>{{ row.rsiFilter }}</td>
-          <button v-on:click="deleteAlert(row.id)">Delete</button>
+          <button style="height: auto; width: 1.5cm" v-on:click="deleteAlert(row.id)">Delete</button>
         </tr>
       </table>
     </div>
@@ -80,19 +78,12 @@ export default {
       rsifilter: "",
       mode: 'dark',
       alert: []
-
-
     }
   },
   components: {
     Header,
   },
 
-  created() {
-    this.userId = this.$route.params.id;
-    this.getAlertlist()
-    window.addEventListener('keyup', this.keyPress)
-  },
 
   methods: {
 
@@ -127,30 +118,19 @@ export default {
             this.getAlertlist()
           })
     },
-
-    goToDashboard: function () {
-      router.push({name: 'SecondPage'})
-    }
-    ,
-    backToHome: function () {
-      router.push({name: 'FirstPage'})
-
-    },
-    keyPress(e) {
-      if (e.key === 't') {
-        this.toggle()
-      }
-    },
     toggle() {
       if (this.mode === "dark") {
         this.mode = "light"
       } else {
         this.mode = "dark"
-
-
       }
-    },
-  }
+    }
+  },
+  mounted() {
+    this.userId = this.$route.params.id;
+    this.getAlertlist()
+
+  },
 }
 
 
@@ -158,6 +138,20 @@ export default {
 
 
 <style>
+
+.SecondPage {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.SecondPageAlignLeft {
+  position: fixed;
+  top: 40%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+}
+
 button {
   width: 100px;
   height: 20px;
@@ -186,23 +180,39 @@ button {
   transition: background 0.3s ease-in-out;
 }
 
+.SecondPageInput {
+  width: auto;
+  height: auto;
+  text-align: center
+}
+
 .dark {
   background: #192734;
   color: #E8E8E8;
 }
 
-table {
-  display: flex;
-  justify-content: right;
-
-}
-
-tr {
-  background-color: #7918f2;
+th {
+  border-bottom: 1pt solid #ffffff;
+  font-size: large;
+  color: #b37afa;
 }
 
 td {
-  background-color: #4801ff;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  border-bottom: 1pt solid #ffffff;
+}
+
+td:first-child {
+  padding-left: 0;
+}
+
+td:last-child {
+  padding-right: 0;
+}
+
+table {
+  border-spacing: 15px 5px;
 }
 
 

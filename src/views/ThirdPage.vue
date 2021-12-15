@@ -1,29 +1,29 @@
 <template>
   <div class="ThirdPage" :class="mode">
+
     <header>
       <nav>
         <div class="ThirdPageImg">
-          <img alt="rsi small logo" src="../assets/rsiSmall.png" style="height: 45px; width: 180px"
+          <img alt="rsi small logo" src="../assets/rsiSmall.png" style="height: 40px; width: 180px"
                v-on:click="backToHome()">
         </div>
         <div class="nav-link" v-on:click="backToHome()">Home</div>
       </nav>
     </header>
-    <br>
+
+
     <div class="ThirdPageCenter">
-      <input class="rounded-card  + thirdPageInput" style="text-align: center" v-model="usersDto.firstName"
+      <input class="rounded-card + thirdPageInput" v-model="usersDto.firstName"
              placeholder="First name">
       <br>
-
-      <input class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.lastName"
+      <input class="rounded-card + thirdPageInput" v-model="usersDto.lastName"
              placeholder="Last name">
       <br>
-
-      <input class="rounded-card + thirdPageInput" style="text-align: center" v-model="usersDto.email"
+      <input class="rounded-card + thirdPageInput" v-model="usersDto.email"
              placeholder="Email">
       <br>
       <br>
-      <button class="rounded-card + signInButton" v-on:click="createNewUser()">Sign up</button>
+      <button class="rounded-card + SignUpButton" v-on:click="createNewUser()">Sign up</button>
       <br>
       <br>
       {{ answer }}
@@ -33,9 +33,7 @@
     <div class="ThirdPageBottom">
       <h5 v-show="answer !== '' ">________</h5>
       <br>
-
-      <!--    näita start nuppu siis kui answer on täidetud v-show="answer !== '' "-->
-      <button class="rounded-card + registerButton" v-show="answer !== '' " v-on:click="startHere()">Start here
+      <button class="rounded-card + StartHereButton" v-show="answer !== '' " v-on:click="startHere()">Start here
       </button>
     </div>
   </div>
@@ -72,47 +70,12 @@ export default {
     backToHome: function () {
       router.push({name: 'FirstPage'})
     },
-    keyPress(e) {
-      if (e.key === 't') {
-        this.toggle()
-      }
-    },
-    toggle() {
-      if (this.mode === "dark") {
-        this.mode = "light"
-      } else {
-        this.mode = "dark"
-      }
-    }
   }
 }
 
 </script>
+
 <style>
-ThirdPage {
-  align-items: center;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 25px;
-  height: 60px;
-  background: #C3C3C3;
-  transition: background 0.3s ease-in-out;
-
-}
-
-.rounded-card {
-  border-radius: 50px;
-}
 
 .ThirdPageImg {
   position: fixed;
@@ -121,13 +84,51 @@ nav {
   transform: translate(-50%, -50%);
   text-align: center;
   border: none;
+}
 
+ThirdPage {
+  align-items: center;
+}
 
+.SignUpButton {
+  width: 200px;
+  height: 40px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #ac32e4 0%,
+  #7918f2 48%,
+  #4801ff 100%);
+  color: #e2e2e2;
+}
+
+.StartHereButton {
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #ac32e4 0%,
+  #7918f2 48%,
+  #4801ff 100%);
+  color: #e2e2e2;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 25px;
+  height: 60px;
+ }
+
+.rounded-card {
+  border-radius: 50px;
 }
 
 .thirdPageInput {
   width: 300px;
   height: 40px;
+  text-align: center;
 }
 
 
@@ -137,16 +138,6 @@ nav {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-}
-
-.dark nav {
-  background: #15202B;
-}
-
-Thirdpage nav .nav-link {
-  display: flex;
-  align-items: center;
-  padding: 0px 15px;
 }
 
 .ThirdPage {
@@ -169,4 +160,5 @@ Thirdpage nav .nav-link {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
 </style>
