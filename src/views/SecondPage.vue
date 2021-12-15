@@ -5,61 +5,60 @@
 
     <br>
     <span style="text-align: left; margin-left: 60px">User ID: {{ userId }}</span>
-
-    <div class="SecondPageAlignLeft">
-      Choose symbol
-      <select v-model="symbol">
-        <option value="1">BTC/USDT</option>
-        <option value="2">ETH/USDT</option>
-        <option value="3">SOL/USDT</option>
-        <option value="4">BNB/USDT</option>
-      </select>
-      <br>
-      <br>
-      RSI timeframe
-      <select v-model="timeframe">
-        <option>1D</option>
-        <option>1H</option>
-      </select>
-      <br>
-      <br>
-      RSI filters <br>
-      <br>
-      <span style="text-align: left; margin-left: 30px">crossing down</span>
-
-      <input v-model="rsifilter" placeholder="available values:1-100" class="SecondPageInput">
-      <br>
-      <br>
-      <br>
-      <button v-on:click="alertParams">Set alert</button>
-      <br>
-      <br>
-    </div>
-
-    <div style="margin-right: 200px; float: right">
-      <button v-on:click="getAlertlist">Refresh</button>
-      <br>
-      <br>
-      <table style="text-align: center">
-        <tr>
-          <th>Symbol</th>
-          <th>Closing price</th>
-          <th>Current RSI</th>
-          <th>RSI timeframe</th>
-          <th>RSI filter</th>
-        </tr>
-        <tr v-for="row in alert">
-          <td>{{ row.symbol }}</td>
-          <td>{{ row.closingPrice }}</td>
-          <td>{{ row.rsi }}</td>
-          <td>{{ row.rsiTimeframe }}</td>
-          <td>{{ row.rsiFilter }}</td>
-          <button style="height: auto; width: 1.5cm" v-on:click="deleteAlert(row.id)">Delete</button>
-        </tr>
-      </table>
+    <div style="display: flex">
+      <div class="SecondPageAlignLeft">
+        Choose symbol
+        <select v-model="symbol">
+          <option value="1">BTC/USDT</option>
+          <option value="2">ETH/USDT</option>
+          <option value="3">SOL/USDT</option>
+          <option value="4">BNB/USDT</option>
+        </select>
+        <br>
+        <br>
+        RSI timeframe
+        <select v-model="timeframe">
+          <option>1D</option>
+          <option>1H</option>
+        </select>
+        <br>
+        <br>
+        RSI filters <br>
+        <br>
+        <span style="text-align: left; margin-left: 30px">crossing down</span>
+        <input v-model="rsifilter" placeholder="available values:1-100" class="SecondPageInput">
+        <br>
+        <br>
+        <br>
+        <button v-on:click="alertParams">Set alert</button>
+        <br>
+        <br>
+      </div>
+      <div class="SecondPageAlignRight">
+        <table>
+          <tr>
+            <button v-on:click="getAlertlist">Refresh</button>
+          </tr>
+          <br>
+          <tr>
+            <th>Symbol</th>
+            <th>Closing price</th>
+            <th>Current RSI</th>
+            <th>RSI timeframe</th>
+            <th>RSI filter</th>
+          </tr>
+          <tr v-for="row in alert">
+            <td>{{ row.symbol }}</td>
+            <td>{{ row.closingPrice }}</td>
+            <td>{{ row.rsi }}</td>
+            <td>{{ row.rsiTimeframe }}</td>
+            <td>{{ row.rsiFilter }}</td>
+            <button style="height: auto; width: 1.5cm" v-on:click="deleteAlert(row.id)">Delete</button>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
-
 
 </template>
 <script>
@@ -139,17 +138,21 @@ export default {
 
 <style>
 
-.SecondPage {
-  width: 100vw;
-  min-height: 100vh;
+.SecondPageAlignLeft {
+  width: 30%;
+  margin-left: 10%;
+  margin-top: 5%;
+  text-align: left;
+
+
 }
 
-.SecondPageAlignLeft {
-  position: fixed;
-  top: 40%;
-  left: 23%;
-  transform: translate(-50%, -50%);
-  text-align: left;
+.SecondPageAlignRight {
+  width: 50%;
+  margin-right: 10%;
+  margin-top: 1%;
+  text-align: center;
+
 }
 
 button {
@@ -177,8 +180,10 @@ button {
   min-height: 100vh;
   background: #F3F3F3;
   color: #15202B;
+
   transition: background 0.3s ease-in-out;
 }
+
 
 .SecondPageInput {
   width: auto;
@@ -192,27 +197,27 @@ button {
 }
 
 th {
-  border-bottom: 1pt solid #ffffff;
+  border-bottom: 1pt solid #F3F3F3;
   font-size: large;
   color: #b37afa;
+  padding: 6px;
+
 }
 
 td {
   padding-left: 7.5px;
   padding-right: 7.5px;
-  border-bottom: 1pt solid #ffffff;
+  border-bottom: 1pt solid #F3F3F3;
 }
 
 td:first-child {
   padding-left: 0;
+
 }
 
 td:last-child {
   padding-right: 0;
-}
 
-table {
-  border-spacing: 15px 5px;
 }
 
 

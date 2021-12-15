@@ -25,6 +25,7 @@
     </div>
   </div>
 
+
 </template>
 
 <script>
@@ -65,6 +66,7 @@ export default {
 .FirstPage {
   width: 100vw;
   min-height: 100vh;
+
 }
 
 .FirstPageImg {
