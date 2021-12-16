@@ -8,25 +8,37 @@
     <div style="display: flex">
       <div class="SecondPageAlignLeft">
         Choose symbol
-        <select v-model="symbol">
+        <span style="margin-left: 50px">
+          <select v-model="symbol">
           <option value="1">BTC/USDT</option>
           <option value="2">ETH/USDT</option>
           <option value="3">SOL/USDT</option>
           <option value="4">BNB/USDT</option>
         </select>
+          </span>
         <br>
         <br>
         RSI timeframe
-        <select v-model="timeframe">
+        <span style="margin-left: 59px">
+          <select v-model="timeframe">
           <option>1D</option>
           <option>1H</option>
         </select>
+          </span>
         <br>
         <br>
-        RSI filters <br>
+        Crossing
+        <span style="margin-left: 98px">
+          <select v-model="crossing">
+          <option value="<">↑</option>
+          <option value=">">↓</option>
+        </select>
+          </span>
         <br>
-        <span style="text-align: left; margin-left: 30px">crossing down</span>
-        <input v-model="rsifilter" placeholder="available values:1-100" class="SecondPageInput">
+        <br>
+        RSI value
+        <span style="margin-left: 95px">
+          <input v-model="rsiFilter" placeholder="available values:1-100" class="SecondPageInput"></span>
         <br>
         <br>
         <br>
@@ -46,13 +58,16 @@
             <th>Current RSI</th>
             <th>RSI timeframe</th>
             <th>RSI filter</th>
+            <th>Crossing</th>
           </tr>
           <tr v-for="row in alert">
             <td>{{ row.symbol }}</td>
             <td>{{ row.closingPrice }}</td>
             <td>{{ row.rsi }}</td>
             <td>{{ row.rsiTimeframe }}</td>
-            <td>{{ row.rsiFilter }}</td>
+            <td>{{ row.rsiFilter}}</td>
+            <td v-if="row.crossing=='<'">↑</td>
+            <td v-if="row.crossing=='>'">↓</td>
             <button style="height: auto; width: 1.5cm" v-on:click="deleteAlert(row.id)">Delete</button>
           </tr>
         </table>
@@ -74,7 +89,8 @@ export default {
       postedParams: "",
       symbol: "",
       timeframe: "",
-      rsifilter: "",
+      rsiFilter: "",
+      crossing: "",
       mode: 'dark',
       alert: []
     }
@@ -87,8 +103,8 @@ export default {
   methods: {
 
     alertParams: function () {
-      this.$http.post('rsiadvisor/setAlert/' + this.symbol + "/" + this.userId + "/"
-          + this.rsifilter + "/" + this.timeframe)
+      this.$http.post('rsiadvisor/setAlert/' + this.symbol + "/" + this.userId + "/" + this.rsiFilter +
+          "/" + this.timeframe + "/" + this.crossing)
           .then(response => {
             this.getAlertlist()
           })
@@ -138,6 +154,7 @@ export default {
 
 <style>
 
+
 .SecondPageAlignLeft {
   width: 30%;
   margin-left: 10%;
@@ -167,6 +184,33 @@ button {
   color: #e2e2e2;
   border-radius: 50px;
 }
+
+select {
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #bf67e8 0%,
+  #32b4c5 48%,
+  #4e8ae3 100%);
+  color: #050402;
+  border-radius: 50px;
+}
+
+input {
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #bf67e8 0%,
+  #32b4c5 48%,
+  #4e8ae3 100%);
+  color: #050402;
+  border-radius: 50px;
+}
+
 
 * {
   margin: 0;
@@ -218,6 +262,10 @@ td:first-child {
 td:last-child {
   padding-right: 0;
 
+}
+
+::placeholder {
+  color: #050402;
 }
 
 
