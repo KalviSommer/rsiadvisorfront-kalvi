@@ -160,8 +160,6 @@ export default {
   margin-left: 10%;
   margin-top: 5%;
   text-align: left;
-
-
 }
 
 .SecondPageAlignRight {

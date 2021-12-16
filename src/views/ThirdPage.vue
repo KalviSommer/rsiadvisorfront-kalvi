@@ -22,22 +22,28 @@
       <input class="rounded-card + thirdPageInput" v-model="usersDto.email"
              placeholder="Email">
       <br>
+      <input class="rounded-card + thirdPageInput" v-model="usersDto.password"
+             placeholder="Set password">
+      <br>
       <br>
       <button class="rounded-card + SignUpButton" v-on:click="createNewUser()">Sign up</button>
       <br>
       <br>
       {{ answer }}
       <br>
-
     </div>
+
     <div class="ThirdPageBottom">
-      <h5 v-show="answer !== '' ">________</h5>
+      <h5 v-show="answer.startsWith('New account')">________</h5>
       <br>
-      <button class="rounded-card + StartHereButton" v-show="answer !== '' " v-on:click="startHere()">Start here
+      <button class="rounded-card + StartHereButton" v-show="answer.startsWith('New account')" v-on:click="startHere()">
+        Start here
       </button>
     </div>
+    <div v-if="token">
+      <router-view/>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -51,21 +57,36 @@ export default {
       usersDto: {},
       userId: "",
       answer: "",
-      mode: 'dark'
+      mode: 'dark',
+      token: '',
     }
-
   },
 
   methods: {
     createNewUser: function () {
-      this.$http.post('rsiadvisor/newuser', this.usersDto)
+      this.$http.post('rsiadvisor/public/newuser', this.usersDto)
           .then(response => {
-            this.userId = response.data
-            this.answer = "New account is registered with the id " + this.userId
+            this.usersDto.userId = response.data
+            this.answer = "New account is registered with the id " + this.usersDto.userId
+          })
+          .catch(error => {
+            if (this.usersDto.firstName == null || this.usersDto.lastName == null || this.usersDto.email == null || this.usersDto.password == null) {
+              this.answer = "Please fill all fields"
+            } else {
+              this.answer = error.response.data.message;
+            }
           })
     },
     startHere: function () {
-      router.push({name: 'SecondPage', params: {id: this.userId}})
+      this.$http.post('rsiadvisor/public/login', this.usersDto)
+          .then(result => {
+            this.token = result.data
+            localStorage.setItem('user-token', this.token)
+            this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.token
+            router.push({
+              name: 'SecondPage', params: {id: this.usersDto.userId}
+            })
+          })
     },
     backToHome: function () {
       router.push({name: 'FirstPage'})
@@ -119,14 +140,14 @@ nav {
   align-items: center;
   padding: 0px 25px;
   height: 60px;
- }
+}
 
 .rounded-card {
   border-radius: 50px;
 }
 
 .thirdPageInput {
-  width: 300px;
+  width: 280px;
   height: 40px;
   text-align: center;
 }
@@ -134,7 +155,7 @@ nav {
 
 .ThirdPageBottom {
   position: fixed;
-  bottom: 30%;
+  bottom: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
