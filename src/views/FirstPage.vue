@@ -7,14 +7,20 @@
 
     <div class="AlignCenter">
       <input class="rounded-card" style="text-align: center" name="userId" placeholder="Enter user ID"
-             v-model="userId">
+             v-model="userDetails.userId">
+      <br>
+      <input class="rounded-card" style="text-align: center" name="userId" placeholder="Password"
+             v-model="userDetails.password">
       <br>
       <br>
-      <button class="rounded-card + signInButton" v-on:click="goToDashboard()">Sign in</button>
+      <button class="rounded-card + signInButton" v-on:click="login()">Sign in</button>
       <br>
       <br>
       {{ answer }}
       <br>
+    </div>
+    <div v-if="token">
+      <router-view/>
     </div>
 
     <div class="AlignBottom">
@@ -39,25 +45,38 @@ export default {
       userDetails: {},
       answer: '',
       userId: '',
+      password: '',
       userIdAns: {},
-      mode: 'dark'
+      mode: 'dark',
+      token: ''
     }
   },
 
 
   methods: {
 
+    login: function () {
+      this.$http.post('rsiadvisor/public/login', this.userDetails)
+          .then(result => {
+            this.token = result.data
+            localStorage.setItem('user-token', this.token)
+            this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.token
+            router.push({
+              name: 'SecondPage', params: {id: this.userDetails.userId}
+            })
+          })
+           .catch(error => {
+            if (this.userDetails.userId == null || this.userDetails.password == null) {
+              this.answer = "Please enter all user credentials"
+            } else {
+              this.answer = error.response.data.message
+            }
+          })
+    },
     goToRegister: function () {
       router.push({name: 'ThirdPage'})
-    },
-    goToDashboard: function () {
-      if (this.userId) {
-        router.push({name: 'SecondPage', params: {id: this.userId}})
-      } else {
-        this.answer = "Please enter ID to sign in"
-      }
-    },
-  }
+    }
+  },
 }
 </script>
 
@@ -99,8 +118,8 @@ export default {
 }
 
 input {
-  width: 300px;
-  height: 50px;
+  width: 280px;
+  height: 40px;
 }
 
 .signInButton {

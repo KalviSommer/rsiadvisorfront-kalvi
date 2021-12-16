@@ -138,13 +138,12 @@ export default {
 
 <style>
 
+
 .SecondPageAlignLeft {
   width: 30%;
   margin-left: 10%;
   margin-top: 5%;
   text-align: left;
-
-
 }
 
 .SecondPageAlignRight {

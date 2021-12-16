@@ -1,12 +1,14 @@
 <template>
   <header>
     <nav>
-      <div class="nav-link" v-on:click="backToHome()">Home</div>
+      <div class="nav-link" v-on:click="signout()">Sign out</div>
     </nav>
-    <!--    <h1 class="modeh1">{{mode}} Mode</h1>-->
     <Toggle :mode="mode" @toggle="$emit('toggle')"/>
-
+    <div v-if="token">
+      <router-view/>
+    </div>
   </header>
+
 </template>
 
 <script>
@@ -14,15 +16,23 @@ import Toggle from '@/views/Toggle'
 import router from "@/router";
 
 export default {
+  data: function () {
+    return {
+      token: '',
+    }
+  },
   name: "Header",
   props: ['mode'],
   components: {
     Toggle
   },
   methods: {
-    backToHome: function () {
+    signout: function () {
+      this.token = '';
+      localStorage.removeItem('user-token')
       router.push({name: 'FirstPage'})
-    }
+      location.reload();
+    },
   }
 }
 </script>
