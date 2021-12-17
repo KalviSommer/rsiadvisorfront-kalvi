@@ -142,6 +142,11 @@ export default {
     }
   },
   mounted() {
+    this.$nextTick(function () {
+      window.setInterval(() => {
+        this.getAlertlist();
+      },10000);
+    })
     this.userId = this.$route.params.id;
     this.getAlertlist()
 
