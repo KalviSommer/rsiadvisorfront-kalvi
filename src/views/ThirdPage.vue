@@ -22,7 +22,7 @@
       <input class="rounded-card + thirdPageInput" v-model="usersDto.email"
              placeholder="Email">
       <br>
-      <input class="rounded-card + thirdPageInput" v-model="usersDto.password"
+      <input type="password" class="rounded-card + thirdPageInput" v-model="usersDto.password"
              placeholder="Set password">
       <br>
       <br>
