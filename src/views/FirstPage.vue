@@ -22,7 +22,6 @@
     <div v-if="token">
       <router-view/>
     </div>
-
     <div class="AlignBottom">
       <h5>________</h5>
       <br>
