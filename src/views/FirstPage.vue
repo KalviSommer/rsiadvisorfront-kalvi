@@ -1,5 +1,5 @@
 <template>
-  <div class="FirstPage" :class="mode">
+  <div class="FirstPage" style="display: flex" :class="mode">
 
     <div class="FirstPageImg">
       <img alt="Rsi logo" src="../assets/rsilogo.png" class="rounded-card">
@@ -9,7 +9,7 @@
       <input class="rounded-card" style="text-align: center" name="userId" placeholder="Enter user ID"
              v-model="userDetails.userId">
       <br>
-      <input class="rounded-card" style="text-align: center" name="userId" placeholder="Password"
+      <input type="password" class="rounded-card" style="text-align: center" name="userId" placeholder="Password"
              v-model="userDetails.password">
       <br>
       <br>
@@ -37,7 +37,6 @@
 <script>
 import router from "@/router";
 
-
 export default {
 
   data: function () {
@@ -52,7 +51,6 @@ export default {
     }
   },
 
-
   methods: {
 
     login: function () {
@@ -65,7 +63,7 @@ export default {
               name: 'SecondPage', params: {id: this.userDetails.userId}
             })
           })
-           .catch(error => {
+          .catch(error => {
             if (this.userDetails.userId == null || this.userDetails.password == null) {
               this.answer = "Please enter all user credentials"
             } else {
@@ -85,7 +83,6 @@ export default {
 .FirstPage {
   width: 100vw;
   min-height: 100vh;
-
 }
 
 .FirstPageImg {

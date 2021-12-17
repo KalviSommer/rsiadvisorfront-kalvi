@@ -1,50 +1,50 @@
 <template>
 
   <div class="SecondPage" :class="mode">
+
     <Header :mode="mode" @toggle="toggle"/>
 
     <br>
     <span style="text-align: left; margin-left: 60px">User ID: {{ userId }}</span>
     <div style="display: flex">
       <div class="SecondPageAlignLeft">
-        Choose symbol
-        <span style="margin-left: 50px">
-          <select v-model="symbol">
-          <option value="1">BTC/USDT</option>
-          <option value="2">ETH/USDT</option>
-          <option value="3">SOL/USDT</option>
-          <option value="4">BNB/USDT</option>
-        </select>
-          </span>
-        <br>
-        <br>
-        RSI timeframe
-        <span style="margin-left: 59px">
-          <select v-model="timeframe">
-          <option>1D</option>
-          <option>1H</option>
-        </select>
-          </span>
-        <br>
-        <br>
-        Crossing
-        <span style="margin-left: 98px">
-          <select v-model="crossing">
-          <option value="<">↑</option>
-          <option value=">">↓</option>
-        </select>
-          </span>
-        <br>
-        <br>
-        RSI value
-        <span style="margin-left: 95px">
-          <input v-model="rsiFilter" placeholder="available values:1-100" class="SecondPageInput"></span>
-        <br>
-        <br>
-        <br>
-        <button v-on:click="alertParams">Set alert</button>
-        <br>
-        <br>
+        <div>
+          Choose symbol
+          <div>
+            <select v-model="symbol">
+              <option value="1">BTC/USDT</option>
+              <option value="2">ETH/USDT</option>
+              <option value="3">SOL/USDT</option>
+              <option value="4">BNB/USDT</option>
+            </select>
+          </div>
+          <br>
+          RSI timeframe
+          <div>
+            <select v-model="timeframe">
+              <option>1D</option>
+              <option>1H</option>
+            </select>
+          </div>
+          <br>
+          Crossing
+          <div>
+            <select v-model="crossing">
+              <option value="<">↑</option>
+              <option value=">">↓</option>
+            </select>
+          </div>
+          <br>
+          RSI value
+          <div>
+            <input v-model="rsiFilter" placeholder="available values:1-100" class="SecondPageInput"></div>
+          <br>
+          <br>
+          <br>
+          <button v-on:click="alertParams">Set alert</button>
+          <br>
+          <br>
+        </div>
       </div>
       <div class="SecondPageAlignRight">
         <table>
@@ -65,7 +65,7 @@
             <td>{{ row.closingPrice }}</td>
             <td>{{ row.rsi }}</td>
             <td>{{ row.rsiTimeframe }}</td>
-            <td>{{ row.rsiFilter}}</td>
+            <td>{{ row.rsiFilter }}</td>
             <td v-if="row.crossing=='<'">↑</td>
             <td v-if="row.crossing=='>'">↓</td>
             <button style="height: auto; width: 1.5cm" v-on:click="deleteAlert(row.id)">Delete</button>
@@ -92,7 +92,8 @@ export default {
       rsiFilter: "",
       crossing: "",
       mode: 'dark',
-      alert: []
+      alert: [],
+
     }
   },
   components: {
@@ -121,7 +122,6 @@ export default {
     },
     getSelectedUser: function () {
       this.$http.get('rsiadvisor/getuser/' + this.userId)
-
           .then(response => {
             console.log(this.alertParams)
             this.postedParams = response.data
@@ -170,6 +170,19 @@ export default {
 
 }
 
+.SecondPage button {
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-image: linear-gradient(-225deg,
+  #ac32e4 0%,
+  #7918f2 48%,
+  #4801ff 100%);
+  color: #e2e2e2;
+  border-radius: 50px;
+}
+
 button {
   width: 100px;
   height: 20px;
@@ -183,29 +196,31 @@ button {
   border-radius: 50px;
 }
 
+SecondPage span {
+  width: 50%;
+}
+
 select {
-  width: 100px;
+  width: 50%;
   height: 20px;
-  font-size: 16px;
   border: none;
+  text-align: center;
   background-image: linear-gradient(-225deg,
-  #bf67e8 0%,
-  #32b4c5 48%,
-  #4e8ae3 100%);
-  color: #050402;
+  #4801ff 0%,
+  #7918f2 48%,
+  #4801ff 100%);
+  background-color: #192734;
+  color: #e2e2e2;
+  text: bold;
   border-radius: 50px;
 }
 
-input {
-  width: 100px;
+.SecondPageInput {
+  width: 50%;
   height: 20px;
-  font-size: 16px;
+  text-align: center;
   border: none;
-  background-image: linear-gradient(-225deg,
-  #bf67e8 0%,
-  #32b4c5 48%,
-  #4e8ae3 100%);
-  color: #050402;
+  color: #0e0e0e;
   border-radius: 50px;
 }
 
@@ -222,15 +237,7 @@ input {
   min-height: 100vh;
   background: #F3F3F3;
   color: #15202B;
-
   transition: background 0.3s ease-in-out;
-}
-
-
-.SecondPageInput {
-  width: auto;
-  height: auto;
-  text-align: center
 }
 
 .dark {
@@ -245,6 +252,7 @@ th {
   padding: 6px;
 
 }
+
 
 td {
   padding-left: 7.5px;
@@ -262,8 +270,8 @@ td:last-child {
 
 }
 
-::placeholder {
-  color: #050402;
+SecondPage placeholder {
+  color: #f3efef;
 }
 
 
